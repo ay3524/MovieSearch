@@ -157,7 +157,6 @@ public class DetailActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 hideDialog();
-
             }
         }, new Response.ErrorListener() {
 
