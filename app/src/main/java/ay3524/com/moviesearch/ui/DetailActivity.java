@@ -153,7 +153,6 @@ public class DetailActivity extends AppCompatActivity {
                         setUpErrorView(R.string.error_movie_not_found,R.string.not_present);
                     }
                 } catch (JSONException e) {
-                    Log.e("JSONError",e.getMessage());
                     e.printStackTrace();
                 }
                 hideDialog();
