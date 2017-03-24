@@ -1,4 +1,4 @@
-package ay3524.com.moviesearch;
+package ay3524.com.moviesearch.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,6 +24,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import ay3524.com.moviesearch.app.AppController;
+import ay3524.com.moviesearch.R;
+import ay3524.com.moviesearch.utils.Utils;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -89,7 +93,7 @@ public class DetailActivity extends AppCompatActivity {
         builder.scheme(Utils.SCHEME)
                 .authority(Utils.BASE_URI)
                 .appendQueryParameter(Utils.T_KEY, title)
-                .appendQueryParameter(Utils.PLOT_KEY, Utils.FULL);
+                .appendQueryParameter(Utils.PLOT_KEY, Utils.SHORT);
 
         switch (position) {
             case 1:
@@ -187,7 +191,7 @@ public class DetailActivity extends AppCompatActivity {
         genre.setText(genreString);
         releaseDate.setText(releaseDateString);
         plot.setText(plotString);
-        rating.setText("IMDB Rating : ".concat(ratingString));
+        rating.setText(Utils.IMDB_RATING_PLACEHOLDER_STRING.concat(ratingString));
 
         try {
             Float f = Float.parseFloat(ratingString);
@@ -201,6 +205,7 @@ public class DetailActivity extends AppCompatActivity {
                 .load(posterURL)
                 .crossFade()
                 .centerCrop()
+                .placeholder(R.drawable.image_loading)
                 .error(R.drawable.sorry_no_image)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(posterImage);

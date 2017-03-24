@@ -1,4 +1,4 @@
-package ay3524.com.moviesearch;
+package ay3524.com.moviesearch.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import ay3524.com.moviesearch.R;
+import ay3524.com.moviesearch.utils.Utils;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (title.isEmpty()) {
             Toast.makeText(getApplicationContext(), R.string.title_empty_toast, Toast.LENGTH_SHORT).show();
         } else {
-            hideKeyBoard(editText);
+            hideKeyBoard();
             Intent i = new Intent(getApplicationContext(), DetailActivity.class);
             i.putExtra(Utils.TITLE, title);
             i.putExtra(Utils.POSITION, positionOfSpinner);
@@ -66,10 +69,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * This method is used to hide to hide the soft input keyboard
-     * @param view    - An Edittext which is to be hidden
      */
-    private void hideKeyBoard(View view) {
-        view = this.getCurrentFocus();
+    private void hideKeyBoard() {
+        View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

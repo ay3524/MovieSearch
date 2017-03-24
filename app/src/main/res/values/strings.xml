@@ -17,6 +17,9 @@
     <string name="poster_image">poster image</string>
     <string name="tag_movie_request">movie_request</string>
     <string name="loding_progress">Loading ...</string>
+    <string name="enter_title">Enter title</string>
+    <string name="search">Search</string>
+    <string name="welcome_to_omdb_movie_search">Welcome to OMDB Movie Search</string>
     <string-array name="spinner_item_names">
         <item>All</item>
         <item>Movie</item>

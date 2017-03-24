@@ -1,4 +1,4 @@
-package ay3524.com.moviesearch;
+package ay3524.com.moviesearch.app;
 
 import android.app.Application;
 import android.text.TextUtils;

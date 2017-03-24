@@ -1,12 +1,8 @@
-package ay3524.com.moviesearch;
+package ay3524.com.moviesearch.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
-/**
- * Created by Ashish on 06-03-2017.
- */
 
 public class Utils {
 
@@ -15,7 +11,7 @@ public class Utils {
     public static final String T_KEY = "t";
     public static final String TYPE_KEY = "type";
     public static final String PLOT_KEY = "plot";
-    public static final String FULL = "full";
+    public static final String SHORT = "short";
     public static final String MOVIE = "movie";
     public static final String SERIES = "series";
     public static final String TITLE = "title";
@@ -30,6 +26,8 @@ public class Utils {
     public static final String JSON_IMDB_RATING_KEY = "imdbRating";
     public static final String JSON_POSTER_URL_KEY = "Poster";
 
+    public static final String IMDB_RATING_PLACEHOLDER_STRING = "IMDB Rating : ";
+
     public static final int DEFAULT_POSITION_VALUE = 0;
     public static final float ZERO_RATING_VALUE = 0f;
     public static final float RATING_BAR_STEP_SIZE = 0.1f;
@@ -37,9 +35,10 @@ public class Utils {
     /**
      * This method is used to check whether internet connection is available or not
      * It returns a boolean value true if the connection is available
-     * @param context    - Takes the context of calling activity
+     *
+     * @param context - Takes the context of calling activity
      */
-    static boolean isConnected(Context context) {
+    public static boolean isConnected(Context context) {
         ConnectivityManager connMgr = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
