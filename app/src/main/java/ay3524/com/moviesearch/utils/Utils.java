@@ -10,8 +10,6 @@ public class Utils {
     public static final String BASE_URI = "www.omdbapi.com";
     public static final String T_KEY = "t";
     public static final String TYPE_KEY = "type";
-    public static final String PLOT_KEY = "plot";
-    public static final String SHORT = "short";
     public static final String MOVIE = "movie";
     public static final String SERIES = "series";
     public static final String TITLE = "title";

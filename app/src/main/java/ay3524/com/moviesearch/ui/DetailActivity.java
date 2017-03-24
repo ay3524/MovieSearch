@@ -7,13 +7,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -25,8 +25,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ay3524.com.moviesearch.app.AppController;
 import ay3524.com.moviesearch.R;
+import ay3524.com.moviesearch.app.AppController;
 import ay3524.com.moviesearch.utils.Utils;
 
 public class DetailActivity extends AppCompatActivity {
@@ -92,8 +92,7 @@ public class DetailActivity extends AppCompatActivity {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme(Utils.SCHEME)
                 .authority(Utils.BASE_URI)
-                .appendQueryParameter(Utils.T_KEY, title)
-                .appendQueryParameter(Utils.PLOT_KEY, Utils.SHORT);
+                .appendQueryParameter(Utils.T_KEY, title);
 
         switch (position) {
             case 1:
@@ -143,16 +142,18 @@ public class DetailActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     String responseString = jsonObject.getString(Utils.JSON_RESPONSE_KEY);
                     if(responseString.equals(Utils.JSON_RESPONSE_VALUE)){
-                        setMovieTextAndImage(jsonObject.getString(jsonObject.getString(Utils.JSON_TITLE_KEY)),
-                                jsonObject.getString(jsonObject.getString(Utils.JSON_GENRE_KEY)),
-                                jsonObject.getString(jsonObject.getString(Utils.JSON_RELEASED_KEY)),
-                                jsonObject.getString(jsonObject.getString(Utils.JSON_PLOT_KEY)),
-                                jsonObject.getString(jsonObject.getString(Utils.JSON_IMDB_RATING_KEY)),
-                                jsonObject.getString(jsonObject.getString(Utils.JSON_POSTER_URL_KEY)));
+                        movieView.setVisibility(View.VISIBLE);
+                        setMovieTextAndImage(jsonObject.getString(Utils.JSON_TITLE_KEY),
+                                jsonObject.getString(Utils.JSON_GENRE_KEY),
+                                jsonObject.getString(Utils.JSON_RELEASED_KEY),
+                                jsonObject.getString(Utils.JSON_PLOT_KEY),
+                                jsonObject.getString(Utils.JSON_IMDB_RATING_KEY),
+                                jsonObject.getString(Utils.JSON_POSTER_URL_KEY));
                     }else{
                         setUpErrorView(R.string.error_movie_not_found,R.string.not_present);
                     }
                 } catch (JSONException e) {
+                    Log.e("JSONError",e.getMessage());
                     e.printStackTrace();
                 }
                 hideDialog();
@@ -163,8 +164,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 setUpErrorView(R.string.problem_server,R.string.worry_text);
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
                 hideDialog();
             }
         });
@@ -204,12 +203,10 @@ public class DetailActivity extends AppCompatActivity {
         Glide.with(DetailActivity.this)
                 .load(posterURL)
                 .crossFade()
-                .centerCrop()
                 .placeholder(R.drawable.image_loading)
                 .error(R.drawable.sorry_no_image)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(posterImage);
-        movieView.setVisibility(View.VISIBLE);
 
     }
 
