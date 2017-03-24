@@ -20,6 +20,13 @@
     <string name="enter_title">Enter title</string>
     <string name="search">Search</string>
     <string name="welcome_to_omdb_movie_search">Welcome to OMDB Movie Search</string>
+    <string name="name">Ashish Yadav</string>
+    <string name="desig">Android Developer</string>
+    <string name="breif">I\'m warmed of mobile technologies. Ideas maker, curious and nature lover.</string>
+    <string name="playstore_dev_id">5312513111734975228</string>
+    <string name="github_id">ay3524</string>
+    <string name="email">ay3524@gmail.com</string>
+    <string name="about_me">About Me</string>
     <string-array name="spinner_item_names">
         <item>All</item>
         <item>Movie</item>
