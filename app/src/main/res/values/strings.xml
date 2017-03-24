@@ -8,15 +8,15 @@
     <string name="error_view_title">Problem with Internet Connection!</string>
     <string name="error_view_subtitle">Check your Internet Connection and come back later</string>
     <string name="error_movie_not_found">Movie or Serial Not Found</string>
-    <string name="not_present">What to do? :\n
-        -->Try different or more accurate title.\n
-        -->Choose wisely between All,Movie,Serial.\n
-        -->If not sure select All.</string>
+    <string name="not_present"><![CDATA[What to do? :\n
+        —>Try different or more accurate title.\n
+        —>Choose wisely between All,Movie,Serial.\n
+        —>If not sure select All.]]></string>
     <string name="problem_server">Problem with Server!</string>
     <string name="worry_text">Don\'t Worry Its not you its us!</string>
     <string name="poster_image">poster image</string>
     <string name="tag_movie_request">movie_request</string>
-    <string name="loding_progress">Loading ...</string>
+    <string name="loding_progress">Loading …</string>
     <string name="enter_title">Enter title</string>
     <string name="search">Search</string>
     <string name="welcome_to_omdb_movie_search">Welcome to OMDB Movie Search</string>
