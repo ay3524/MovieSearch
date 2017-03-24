@@ -42,7 +42,6 @@ public class DetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setUpActionBar();
 
-        //textView = (TextView) findViewById(R.id.text);
         posterImage = (ImageView) findViewById(R.id.image);
         title = (TextView) findViewById(R.id.title);
         genre = (TextView) findViewById(R.id.genre);
@@ -69,15 +68,13 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is used to check intenet connection and show the movie result
-     *
-     * @param url    - movie url based on given title
+     * This method is used to put the back button on toolbar for navigation
      */
-    private void checkConnectionAndDisplayTheMovie(String url) {
-        if (Utils.isConnected(getApplicationContext())) {
-            displayTheMovieResult(url);
-        } else {
-            setUpErrorView(R.string.error_view_title,R.string.error_view_subtitle);
+    private void setUpActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+            actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -107,13 +104,15 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is used to put the back button on toolbar for navigation
+     * This method is used to check intenet connection and show the movie result
+     *
+     * @param url    - movie url based on given title
      */
-    private void setUpActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false);
-            actionBar.setDisplayHomeAsUpEnabled(true);
+    private void checkConnectionAndDisplayTheMovie(String url) {
+        if (Utils.isConnected(getApplicationContext())) {
+            displayTheMovieResult(url);
+        } else {
+            setUpErrorView(R.string.error_view_title,R.string.error_view_subtitle);
         }
     }
 
@@ -138,9 +137,14 @@ public class DetailActivity extends AppCompatActivity {
 
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    String responseString = jsonObject.getString("Response");
-                    if(responseString.equals("True")){
-                        setMovieTextAndImage(jsonObject);
+                    String responseString = jsonObject.getString(Utils.JSON_RESPONSE_KEY);
+                    if(responseString.equals(Utils.JSON_RESPONSE_VALUE)){
+                        setMovieTextAndImage(jsonObject.getString(jsonObject.getString(Utils.JSON_TITLE_KEY)),
+                                jsonObject.getString(jsonObject.getString(Utils.JSON_GENRE_KEY)),
+                                jsonObject.getString(jsonObject.getString(Utils.JSON_RELEASED_KEY)),
+                                jsonObject.getString(jsonObject.getString(Utils.JSON_PLOT_KEY)),
+                                jsonObject.getString(jsonObject.getString(Utils.JSON_IMDB_RATING_KEY)),
+                                jsonObject.getString(jsonObject.getString(Utils.JSON_POSTER_URL_KEY)));
                     }else{
                         setUpErrorView(R.string.error_movie_not_found,R.string.not_present);
                     }
@@ -167,24 +171,24 @@ public class DetailActivity extends AppCompatActivity {
     }
 
     /**
-     * This method is used to set text and image for the current title entered by user
-     * @param jsonObject   - JSONObject for the current url
+     * This method is used to set values of TextView and ImageView for the current title entered by user
+     * @param titleString   - Movie or Serial Title
+     * @param genreString   - Movie or Serial Genre
+     * @param releaseDateString   - Movie or Serial Release Date
+     * @param plotString   - Movie or Serial Full Plot
+     * @param ratingString   - Movie or Serial IMDB Rating
+     * @param posterURL   - Movie or Serial poster url link
      */
-    private void setMovieTextAndImage(JSONObject jsonObject) throws JSONException {
-        String titleString = jsonObject.getString("Title");
+    private void setMovieTextAndImage(String titleString, String genreString,
+                                      String releaseDateString, String plotString,
+                                      String ratingString, String posterURL) {
+
         title.setText(titleString);
-
-        String genreString = jsonObject.getString("Genre");
         genre.setText(genreString);
-
-        String releaseDateString = jsonObject.getString("Released");
         releaseDate.setText(releaseDateString);
-
-        String plotString = jsonObject.getString("Plot");
         plot.setText(plotString);
-
-        String ratingString = jsonObject.getString("imdbRating");
         rating.setText("IMDB Rating : ".concat(ratingString));
+
         try {
             Float f = Float.parseFloat(ratingString);
             ratingBar.setRating(f);
@@ -193,7 +197,6 @@ public class DetailActivity extends AppCompatActivity {
         }
         ratingBar.setStepSize(Utils.RATING_BAR_STEP_SIZE);
 
-        String posterURL = jsonObject.getString("Poster");
         Glide.with(DetailActivity.this)
                 .load(posterURL)
                 .crossFade()
@@ -202,6 +205,7 @@ public class DetailActivity extends AppCompatActivity {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(posterImage);
         movieView.setVisibility(View.VISIBLE);
+
     }
 
     /**
